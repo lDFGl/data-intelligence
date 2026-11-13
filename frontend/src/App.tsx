@@ -16,6 +16,21 @@ function parseCsv(input: string): string[][] {
   let row: string[] = [];
   let cell = "";
   let quoted = false;
+  let commaCount = 0;
+  let semicolonCount = 0;
+  let inFirstFieldQuote = false;
+
+  for (let i = 0; i < input.length; i += 1) {
+    const char = input[i];
+    if (char === '"') {
+      if (inFirstFieldQuote && input[i + 1] === '"') i += 1;
+      else inFirstFieldQuote = !inFirstFieldQuote;
+    } else if (!inFirstFieldQuote && (char === "\\n" || char === "\\r")) {
+      break;
+    } else if (!inFirstFieldQuote && char === ",") commaCount += 1;
+    else if (!inFirstFieldQuote && char === ";") semicolonCount += 1;
+  }
+  const delimiter = semicolonCount > commaCount ? ";" : ",";
 
   for (let i = 0; i < input.length; i += 1) {
     const char = input[i];
@@ -26,7 +41,7 @@ function parseCsv(input: string): string[][] {
       } else {
         quoted = !quoted;
       }
-    } else if (char === "," && !quoted) {
+    } else if (char === delimiter && !quoted) {
       row.push(cell);
       cell = "";
     } else if ((char === "\n" || char === "\r") && !quoted) {
