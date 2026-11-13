@@ -2,28 +2,34 @@
 
 Plataforma modular em desenvolvimento para importação, validação, cruzamento e análise de dados, com geração futura de indicadores e relatórios executivos.
 
-> **Status:** protótipo inicial. O GitHub Pages publica somente uma demonstração estática do frontend. Não é uma aplicação corporativa pronta para produção.
+> **Status:** protótipo demonstrativo. O GitHub Pages publica somente uma aplicação estática no navegador; não é uma aplicação corporativa pronta para produção.
 
 ## Demonstração pública
 
-Após a habilitação do GitHub Pages pelo workflow, a interface ficará disponível em:
-
 https://ldfgl.github.io/data-intelligence/
 
-### Recurso disponível nesta versão
+### Recursos demonstrativos disponíveis
 
-- **Pré-visualização de CSV:** seleção de arquivo no navegador, leitura de cabeçalhos e visualização de até 100 registros.
-- Limite de arquivo de 5 MB.
-- O arquivo é processado localmente no navegador; não é enviado para API ou armazenado pelo projeto.
-- A demonstração não persiste os dados e não realiza cruzamentos entre bases.
+- **Excel (.xlsx):** leitura local de abas visíveis, seleção de aba e pré-visualização de até 100 registros. Limite demonstrativo de 10 MB, 20 mil linhas e 100 colunas por aba.
+- **CSV (.csv):** leitura local com detecção simples de delimitador vírgula/ponto e vírgula e pré-visualização de até 100 registros.
+- **PDF (.pdf):** extração e pré-visualização de texto de até 20 páginas e 100 mil caracteres.
+- Os três formatos são processados no navegador; os arquivos não são enviados para API nem armazenados pelo projeto.
 
-Use somente arquivos fictícios, sem dados pessoais, financeiros, corporativos ou confidenciais. Embora o processamento do CSV ocorra localmente, o site e seu código são públicos e esta demonstração não oferece autenticação ou controles corporativos.
+### Limitações importantes
+
+- PDFs digitalizados como imagem precisam de OCR, que ainda não está implementado.
+- PDFs protegidos por senha podem não ser processados.
+- Fórmulas de Excel não são executadas; células com fórmulas são identificadas como não executadas.
+- A demonstração não realiza cruzamentos automáticos, análise de qualidade ou geração de relatórios.
+- O conteúdo completo não é apresentado na tela; a interface mostra uma prévia limitada.
+
+Use somente arquivos fictícios, sem dados pessoais, financeiros, corporativos ou confidenciais. Embora o processamento ocorra localmente, o site e seu código são públicos e esta demonstração não oferece autenticação ou controles corporativos.
 
 ## Próximas etapas
 
-- Leitura e pré-visualização de Excel (.xlsx).
 - Validação de estrutura, tipos, duplicidades e campos vazios.
 - Comparação de bases por chaves configuráveis.
+- OCR opcional para PDFs digitalizados.
 - API FastAPI, autenticação, autorização por departamento e PostgreSQL.
 - Armazenamento privado, trilhas de auditoria e relatórios executivos.
 
