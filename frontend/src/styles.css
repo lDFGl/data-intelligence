@@ -65,3 +65,12 @@ th{position:sticky;top:0;background:#135c6c;color:#fff;font-weight:600}
 td{color:#506970}
 tbody tr:nth-child(even){background:#f7fafb}
 @media(max-width:760px){.import-panel{padding:16px}.import-heading{align-items:flex-start}.preview-meta{align-items:flex-start;flex-direction:column}.upload-zone input{width:100%}}
+
+.sheet-selector{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;padding:12px;background:#f7fafb;border:1px solid #e5ecee;border-radius:8px}
+.sheet-selector label{font-size:12px;font-weight:700;color:#34535b}
+.sheet-selector select{min-width:180px;border:1px solid #cbdadd;border-radius:6px;background:#fff;padding:8px 10px;color:#34535b;font:inherit;font-size:12px}
+.sheet-selector span{font-size:11px;color:#71858a}
+.pdf-preview{margin-top:20px}
+.pdf-preview .preview-meta strong{display:flex;align-items:center;gap:7px}
+.pdf-note{font-size:11px;line-height:1.5;color:#8a754d;background:#fff9ed;padding:10px 12px;border-radius:7px}
+.pdf-preview pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:480px;overflow:auto;background:#f7fafb;border:1px solid #e5ecee;border-radius:8px;padding:16px;font:12px/1.7 'DM Sans',sans-serif;color:#506970}
