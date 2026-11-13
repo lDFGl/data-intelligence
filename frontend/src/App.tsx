@@ -35,7 +35,7 @@ function parseCsv(input: string): string[][] {
     if (char === '"') {
       if (inFirstFieldQuote && input[i + 1] === '"') i += 1;
       else inFirstFieldQuote = !inFirstFieldQuote;
-    } else if (!inFirstFieldQuote && (char === "\\n" || char === "\\r")) {
+    } else if (!inFirstFieldQuote && (char === "\n" || char === "\r")) {
       break;
     } else if (!inFirstFieldQuote && char === ",") commaCount += 1;
     else if (!inFirstFieldQuote && char === ";") semicolonCount += 1;
@@ -51,8 +51,8 @@ function parseCsv(input: string): string[][] {
       } else quoted = !quoted;
     } else if (char === delimiter && !quoted) {
       row.push(cell); cell = "";
-    } else if ((char === "\\n" || char === "\\r") && !quoted) {
-      if (char === "\\r" && input[i + 1] === "\\n") i += 1;
+    } else if ((char === "\n" || char === "\r") && !quoted) {
+      if (char === "\r" && input[i + 1] === "\n") i += 1;
       row.push(cell);
       if (row.some((value) => value.trim() !== "")) rows.push(row);
       row = []; cell = "";
@@ -117,12 +117,12 @@ async function readPdf(file: File): Promise<{ text: string; pages: number; extra
   for (let pageNumber = 1; pageNumber <= pagesToRead; pageNumber += 1) {
     const page = await pdf.getPage(pageNumber);
     const content = await page.getTextContent();
-    const pageText = content.items.map((item) => ("str" in item ? item.str : "")).join(" ").replace(/\\s+/g, " ").trim();
-    if (pageText) chunks.push(`PÁGINA ${pageNumber}\\n${pageText}`);
+    const pageText = content.items.map((item) => ("str" in item ? item.str : "")).join(" ").replace(/\s+/g, " ").trim();
+    if (pageText) chunks.push(`PÁGINA ${pageNumber}\n${pageText}`);
     length += pageText.length;
     if (length >= PDF_TEXT_LIMIT) break;
   }
-  const text = chunks.join("\\n\\n").slice(0, PDF_TEXT_LIMIT);
+  const text = chunks.join("\n\n").slice(0, PDF_TEXT_LIMIT);
   if (!text.trim()) throw new Error("Não foi possível extrair texto. Se o PDF for digitalizado como imagem, será necessário OCR, ainda não disponível nesta demonstração.");
   return { text, pages: pageCount, extractedPages: pagesToRead };
 }
@@ -166,7 +166,7 @@ export default function App() {
     const extension = file.name.split(".").pop()?.toLowerCase();
     try {
       if (extension === "csv") {
-        const parsed = parseCsv((await file.text()).replace(/^\\uFEFF/, ""));
+        const parsed = parseCsv((await file.text()).replace(/^\uFEFF/, ""));
         const table = normalizeTable(parsed);
         setFileType("csv"); setFileName(file.name); setHeaders(table.headers);
         setRecords(table.records); setTotalRows(table.totalRows);
@@ -212,7 +212,7 @@ export default function App() {
           {error && <div className="error-message"><AlertCircle size={17} />{error}</div>}
           {fileName && fileType === "excel" && <div className="sheet-selector"><label htmlFor="sheet-select">Aba da planilha</label><select id="sheet-select" value={activeSheet} onChange={(event) => selectSheet(event.target.value)}>{sheetNames.map((name) => <option key={name} value={name}>{name}</option>)}</select><span>{sheetNames.length} aba(s) com dados identificadas</span></div>}
           {fileName && fileType !== "pdf" && <div className="preview"><div className="preview-meta"><strong>{fileName}{activeSheet ? ` · ${activeSheet}` : ""}</strong><span>{totalRows.toLocaleString("pt-BR")} registros · {headers.length} colunas</span></div>{totalRows > PREVIEW_LIMIT && <p className="preview-limit">Exibindo os primeiros {PREVIEW_LIMIT} registros. {fileType === "excel" && totalRows > EXCEL_ROW_LIMIT ? `A leitura foi limitada a ${EXCEL_ROW_LIMIT.toLocaleString("pt-BR")} linhas por aba.` : "O arquivo completo não é exibido na prévia."}</p>}<div className="table-wrap"><table><thead><tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr></thead><tbody>{previewRows.map((record, rowIndex) => <tr key={rowIndex}>{headers.map((_, columnIndex) => <td key={columnIndex}>{record[columnIndex] ?? ""}</td>)}</tr>)}</tbody></table></div></div>}
-          {fileName && fileType === "pdf" && <div className="pdf-preview"><div className="preview-meta"><strong><FileText size={15} /> {fileName}</strong><span>{pdfPages} página(s) no documento</span></div><p className="pdf-note">Texto extraído de até {PDF_PAGE_LIMIT} páginas (limite de {PDF_TEXT_LIMIT.toLocaleString("pt-BR")} caracteres). PDFs digitalizados como imagem precisam de OCR, ainda não disponível.</p><pre>{pdfText}{pdfPages > pdfExtractedPages ? "\\n\\n[Prévia limitada: nem todas as páginas foram processadas.]" : ""}</pre></div>}
+          {fileName && fileType === "pdf" && <div className="pdf-preview"><div className="preview-meta"><strong><FileText size={15} /> {fileName}</strong><span>{pdfPages} página(s) no documento</span></div><p className="pdf-note">Texto extraído de até {PDF_PAGE_LIMIT} páginas (limite de {PDF_TEXT_LIMIT.toLocaleString("pt-BR")} caracteres). PDFs digitalizados como imagem precisam de OCR, ainda não disponível.</p><pre>{pdfText}{pdfPages > pdfExtractedPages ? "\n\n[Prévia limitada: nem todas as páginas foram processadas.]" : ""}</pre></div>}
         </section>
 
         <section className="notice"><div className="notice-icon"><ShieldCheck size={20} /></div><div><strong>Demonstração pública — não utilize dados reais</strong><p>Excel, CSV e PDF são processados localmente no navegador e não são enviados para API. Esta página é pública e não oferece autenticação, banco de dados ou armazenamento seguro. PDFs com senha e documentos digitalizados podem não ser lidos; nenhum macro ou fórmula é executado.</p></div></section>
