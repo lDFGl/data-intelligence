@@ -1,26 +1,39 @@
 # FG Data Intelligence
 
-Plataforma corporativa modular para importação, validação, cruzamento e análise de dados, com geração de indicadores e relatórios executivos.
+Plataforma modular em desenvolvimento para importação, validação, cruzamento e análise de dados, com geração futura de indicadores e relatórios executivos.
 
-> **Status:** fundação técnica inicial. Ainda não é uma aplicação pronta para produção e não deve receber dados corporativos reais ou confidenciais.
+> **Status:** protótipo inicial. O GitHub Pages publica somente uma demonstração estática do frontend. Não é uma aplicação corporativa pronta para produção.
 
-## Objetivos da primeira versão
+## Demonstração pública
 
-- Importar arquivos Excel (.xlsx) e CSV.
-- Pré-visualizar e validar estruturas e registros.
-- Explorar dados com filtros.
-- Cruzar duas bases por chaves definidas pelo usuário.
-- Identificar divergências, duplicidades e registros ausentes.
-- Gerar resultados rastreáveis e relatórios executivos.
+Após a habilitação do GitHub Pages pelo workflow, a interface ficará disponível em:
 
-## Arquitetura inicial
+https://ldfgl.github.io/data-intelligence/
+
+### Recurso disponível nesta versão
+
+- **Pré-visualização de CSV:** seleção de arquivo no navegador, leitura de cabeçalhos e visualização de até 100 registros.
+- Limite de arquivo de 5 MB.
+- O arquivo é processado localmente no navegador; não é enviado para API ou armazenado pelo projeto.
+- A demonstração não persiste os dados e não realiza cruzamentos entre bases.
+
+Use somente arquivos fictícios, sem dados pessoais, financeiros, corporativos ou confidenciais. Embora o processamento do CSV ocorra localmente, o site e seu código são públicos e esta demonstração não oferece autenticação ou controles corporativos.
+
+## Próximas etapas
+
+- Leitura e pré-visualização de Excel (.xlsx).
+- Validação de estrutura, tipos, duplicidades e campos vazios.
+- Comparação de bases por chaves configuráveis.
+- API FastAPI, autenticação, autorização por departamento e PostgreSQL.
+- Armazenamento privado, trilhas de auditoria e relatórios executivos.
+
+## Arquitetura planejada
 
 - **Frontend:** React + TypeScript + Vite.
 - **Backend:** Python + FastAPI.
 - **Processamento:** Pandas e OpenPyXL.
-- **Banco de dados:** PostgreSQL (a ser conectado nas próximas etapas).
-- **Mobile:** interface responsiva; PWA será habilitada em etapa própria.
-- **Estratégia:** monólito modular, com contratos de API explícitos.
+- **Banco de dados:** PostgreSQL.
+- **Mobile:** interface responsiva; PWA em etapa própria.
 
 ## Estrutura
 
@@ -35,7 +48,7 @@ Consulte [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
 
 ## Segurança
 
-Consulte [SECURITY.md](SECURITY.md). Nunca envie planilhas reais, documentos corporativos, credenciais, tokens ou dados pessoais para este repositório. O repositório deve permanecer privado antes de qualquer uso corporativo. A configuração atual é apenas uma fundação de desenvolvimento.
+Consulte [SECURITY.md](SECURITY.md). Não envie planilhas reais, documentos corporativos, credenciais, tokens ou dados pessoais para este repositório. A versão pública é exclusivamente uma demonstração com dados fictícios.
 
 ## Princípios
 
